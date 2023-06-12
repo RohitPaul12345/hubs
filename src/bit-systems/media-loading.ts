@@ -99,6 +99,9 @@ function resizeAndRecenter(world: HubsWorld, media: EntityID, eid: EntityID) {
   const mediaObj = world.eid2obj.get(media)!;
   const box = new Box3();
   box.setFromObject(mediaObj);
+  if (box.isEmpty()) {
+    box.setFromCenterAndSize(new Vector3(0, 0, 0), new Vector3(1, 1, 1));
+  }
 
   let scalar = 1;
   if (resize) {
