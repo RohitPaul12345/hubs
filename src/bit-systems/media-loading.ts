@@ -16,7 +16,7 @@ import { animate } from "../utils/animate";
 import { setNetworkedDataWithoutRoot } from "../utils/assign-network-ids";
 import { computeObjectAABB } from "../utils/auto-box-collider";
 import { crClearTimeout, crNextFrame, crTimeout } from "../utils/coroutine";
-import { ClearFunction, JobRunner, withRollback } from "../utils/coroutine-utils";
+import { ClearFunction, JobRunner } from "../utils/coroutine-utils";
 import { easeOutQuadratic } from "../utils/easing";
 import { renderAsEntity } from "../utils/jsx-entity";
 import { loadImage } from "../utils/load-image";
@@ -187,7 +187,7 @@ function* loadMedia(world: HubsWorld, eid: EntityID) {
     if (MediaLoader.flags[eid] & MEDIA_LOADER_FLAGS.ANIMATE_LOAD) {
       const loadingObjEid = renderAsEntity(world, LoadingObject());
       loadingObjs.set(eid, loadingObjEid);
-    add(world, loadingObjEid, eid);
+      add(world, loadingObjEid, eid);
     }
   }, 400);
   const src = APP.getString(MediaLoader.src[eid]);
@@ -222,16 +222,16 @@ function* loadAndAnimateMedia(world: HubsWorld, eid: EntityID, clearRollbacks: C
     yield* animateScale(world, media);
   }
 
-      const box = getBox(world, eid, media);
-      addComponent(world, MediaContentBounds, eid);
-      box.getSize(tmpVector);
-      MediaContentBounds.bounds[eid].set(tmpVector.toArray());
+  const box = getBox(world, eid, media);
+  addComponent(world, MediaContentBounds, eid);
+  box.getSize(tmpVector);
+  MediaContentBounds.bounds[eid].set(tmpVector.toArray());
 
-    // TODO update scale?
+  // TODO update scale?
   inflatePhysicsShape(world, media, {
-      type: hasComponent(world, GLTFModel, media) ? Shape.HULL : Shape.BOX,
-      minHalfExtent: 0.04
-    });
+    type: hasComponent(world, GLTFModel, media) ? Shape.HULL : Shape.BOX,
+    minHalfExtent: 0.04
+  });
 
   addComponent(world, MediaLoaded, media);
   removeComponent(world, MediaLoader, eid);
