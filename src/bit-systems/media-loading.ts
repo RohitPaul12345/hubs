@@ -176,13 +176,16 @@ type MediaInfo = {
   thumbnail: string;
 };
 
+const loadingObjs = new Map<EntityID, EntityID>();
+
 function* loadMedia(world: HubsWorld, eid: EntityID) {
-  let loadingObjEid = 0;
   const addLoadingObjectTimeout = crTimeout(() => {
-    loadingObjEid = renderAsEntity(world, LoadingObject());
+    if (MediaLoader.flags[eid] & MEDIA_LOADER_FLAGS.ANIMATE_LOAD) {
+      const loadingObjEid = renderAsEntity(world, LoadingObject());
+      loadingObjs.set(eid, loadingObjEid);
     add(world, loadingObjEid, eid);
+    }
   }, 400);
-  yield withRollback(Promise.resolve(), () => loadingObjEid && removeEntity(world, loadingObjEid));
   const src = APP.getString(MediaLoader.src[eid]);
   let media: EntityID;
   try {
@@ -198,7 +201,6 @@ function* loadMedia(world: HubsWorld, eid: EntityID) {
     media = renderAsEntity(world, ErrorObject());
   }
   crClearTimeout(addLoadingObjectTimeout);
-  loadingObjEid && removeEntity(world, loadingObjEid);
   return media;
 }
 
@@ -243,6 +245,9 @@ export function mediaLoadingSystem(world: HubsWorld) {
   });
 
   mediaLoaderExitQuery(world).forEach(function (eid) {
+    const loadingObjEid = loadingObjs.get(eid)!;
+    removeEntity(world, loadingObjEid);
+    loadingObjs.delete(eid);
     jobs.stop(eid);
   });
 
