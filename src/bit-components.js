@@ -127,7 +127,6 @@ export const PhysicsShape = defineComponent({
 export const Pinnable = defineComponent();
 export const Pinned = defineComponent();
 export const DestroyAtExtremeDistance = defineComponent();
-export const MediaLoading = defineComponent();
 export const FloatyObject = defineComponent({ flags: Types.ui8, releaseGravity: Types.f32 });
 export const NetworkedFloatyObject = defineComponent({ flags: Types.ui8 });
 export const MakeKinematicOnRelease = defineComponent();

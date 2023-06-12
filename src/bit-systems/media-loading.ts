@@ -195,7 +195,6 @@ function* loadMedia(world: HubsWorld, eid: EntityID) {
       throw new UnsupportedMediaTypeError(eid, urlData.mediaType);
     }
     media = yield* loader(world, urlData);
-    addComponent(world, MediaLoaded, media);
   } catch (e) {
     console.error(e);
     media = renderAsEntity(world, ErrorObject());
@@ -218,21 +217,20 @@ function* loadAndAnimateMedia(world: HubsWorld, eid: EntityID, clearRollbacks: C
   if (MediaLoader.flags[eid] & MEDIA_LOADER_FLAGS.ANIMATE_LOAD) {
     yield* animateScale(world, media);
   }
-  removeComponent(world, MediaLoader, eid);
 
-  if (media) {
-    if (hasComponent(world, MediaLoaded, media)) {
       const box = getBox(world, eid, media);
       addComponent(world, MediaContentBounds, eid);
       box.getSize(tmpVector);
       MediaContentBounds.bounds[eid].set(tmpVector.toArray());
-    }
+
     // TODO update scale?
-    inflatePhysicsShape(world, eid, {
+  inflatePhysicsShape(world, media, {
       type: hasComponent(world, GLTFModel, media) ? Shape.HULL : Shape.BOX,
       minHalfExtent: 0.04
     });
-  }
+
+  addComponent(world, MediaLoaded, media);
+  removeComponent(world, MediaLoader, eid);
 }
 
 const jobs = new JobRunner();
