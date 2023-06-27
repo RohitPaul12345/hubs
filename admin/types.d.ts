@@ -6,7 +6,7 @@ export type ReticulumMetaT = {
   repo: ReticulumRepoT;
 };
 
-/**
+/*
  * p0 : FREE TIER
  * p1 : STANDARD TIER
  * b1: BUSINESS TIER
