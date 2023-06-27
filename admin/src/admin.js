@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+// eslint-disable react/prop-types 
 import "./webxr-bypass-hacks";
 import configs from "./utils/configs";
 import ReactDOM from "react-dom";
@@ -180,8 +180,8 @@ const mountUI = async (retPhxChannel, customRoutes, layout) => {
   let dataProvider;
   let authProvider;
 
-  // If POSTGREST_SERVER is set, we're talking directly to PostgREST over a tunnel, and will be managing the
-  // perms token ourselves. If we're not, we talk to reticulum and presume it will handle perms token forwarding.
+  /* If POSTGREST_SERVER is set, we're talking directly to PostgREST over a tunnel, and will be managing the
+   perms token ourselves. If we're not, we talk to reticulum and presume it will handle perms token forwarding.*/
 
   let permsTokenRefreshInterval;
 
@@ -257,7 +257,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const appConfigSchemaCopy = { ...appConfigSchema };
 
-    /**
+    /*
      * Note: we are removing the "images" and "theme" tab from the app settings tabs and making a new page,
      * these pages are intended to be blocked in free tier.
      */
