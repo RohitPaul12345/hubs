@@ -60,13 +60,13 @@
 export default (function () {
   "use strict";
 
-  // This is a function that can parse a JSON text, producing a JavaScript
-  // data structure. It is a simple, recursive descent parser. It does not use
-  // eval or regular expressions, so it can be used as a model for implementing
-  // a JSON parser in other languages.
+  /* This is a function that can parse a JSON text, producing a JavaScript
+   data structure. It is a simple, recursive descent parser. It does not use
+   eval or regular expressions, so it can be used as a model for implementing
+   a JSON parser in other languages.*/
 
-  // We are defining the function inside of another function to avoid creating
-  // global variables.
+  /* We are defining the function inside of another function to avoid creating
+   global variables.*/
 
   let at, // The index of the current character
     ch, // The current character
@@ -98,8 +98,8 @@ export default (function () {
         error("Expected '" + c + "' instead of '" + ch + "'");
       }
 
-      // Get the next character. When there are no more characters,
-      // return the empty string.
+      /* Get the next character. When there are no more characters,
+       return the empty string.*/
 
       ch = text.charAt(at);
       at += 1;
@@ -286,8 +286,8 @@ export default (function () {
     };
 
   value = function () {
-    // Parse a JSON value. It could be an object, an array, a string, a number,
-    // or a word.
+    /* Parse a JSON value. It could be an object, an array, a string, a number,
+     or a word.*/
 
     white();
     switch (ch) {
@@ -304,8 +304,8 @@ export default (function () {
     }
   };
 
-  // Return the json_parse function. It will have access to all of the above
-  // functions and variables.
+  /* Return the json_parse function. It will have access to all of the above
+   functions and variables.*/
 
   return function (source, reviver) {
     let result;
@@ -319,11 +319,11 @@ export default (function () {
       error("Syntax error");
     }
 
-    // If there is a reviver function, we recursively walk the new structure,
-    // passing each name/value pair to the reviver function for possible
-    // transformation, starting with a temporary root object that holds the result
-    // in an empty key. If there is not a reviver function, we simply return the
-    // result.
+    /* If there is a reviver function, we recursively walk the new structure,
+     passing each name/value pair to the reviver function for possible
+     transformation, starting with a temporary root object that holds the result
+     in an empty key. If there is not a reviver function, we simply return the
+     result.*/
 
     return typeof reviver === "function"
       ? (function walk(holder, key) {
