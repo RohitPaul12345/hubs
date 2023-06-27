@@ -94,10 +94,10 @@ module.exports = (env, argv) => {
     },
     resolve: {
       alias: {
-        // aframe and networked-aframe are still using commonjs modules. three and bitecs are peer dependanciees
+        /* aframe and networked-aframe are still using commonjs modules. three and bitecs are peer dependanciees
         // but they are "smart" and have builds for both ESM and CJS depending on if import or require is used.
         // This forces the ESM version to be used otherwise we end up with multiple instances of the libraries,
-        // and for example AFRAME.THREE.Object3D !== THREE.Object3D in Hubs code, which breaks many things.
+        // and for example AFRAME.THREE.Object3D !== THREE.Object3D in Hubs code, which breaks many things.*/
         three$: path.resolve(__dirname, "./node_modules/three/build/three.module.js"),
         bitecs$: path.resolve(__dirname, "./node_modules/bitecs/dist/index.mjs"),
 
@@ -181,8 +181,8 @@ module.exports = (env, argv) => {
           }
         },
         {
-          // We use babel to handle typescript so that features are correctly polyfilled for our targeted browsers. It also ends up being
-          // a good deeal faster since it just strips out types. It does NOT typecheck. Typechecking is only done at build and (ideally) in your editor.
+          /* We use babel to handle typescript so that features are correctly polyfilled for our targeted browsers. It also ends up being
+           a good deeal faster since it just strips out types. It does NOT typecheck. Typechecking is only done at build and (ideally) in your editor.*/
           test: /\.tsx?$/,
           loader: "babel-loader",
           options: require("../babel.config"),
