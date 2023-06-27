@@ -487,9 +487,9 @@ module.exports = async (env, argv) => {
           loader: "babel-loader"
         },
         {
-          // We use babel to handle typescript so that features are correctly polyfilled for our targeted browsers. It also ends up being
-          // a good deal faster since it just strips out types. It does NOT typecheck. Typechecking is handled at build time by `npm run check`
-          // and concurrently at dev time with ForkTsCheckerWebpackPlugin
+          /* We use babel to handle typescript so that features are correctly polyfilled for our targeted browsers. It also ends up being
+           a good deal faster since it just strips out types. It does NOT typecheck. Typechecking is handled at build time by `npm run check`
+           and concurrently at dev time with ForkTsCheckerWebpackPlugin*/
           test: /\.tsx?$/,
           include: [path.resolve(__dirname, "src")],
           exclude: [path.resolve(__dirname, "node_modules")],
